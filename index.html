@@ -3,268 +3,513 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AdvocateNow — Advocacy Website Template</title>
-  <meta name="description" content="Modern, single-file advocacy website template (HTML/CSS/JS). Looks like a Next.js UI but only uses vanilla code.">
+  <title>EmpowerED — Inspiring Tomorrow's Innovators</title>
+  <meta name="description" content="EmpowerED: Inspiring Tomorrow’s Innovators through Experience — an advocacy site by CETSO and its child organizations." />
   <style>
+
     :root{
-      --bg:#0f1724; --card:#0b1220; --muted:#98a0b3; --accent1:#7c3aed; --accent2:#06b6d4; --glass: rgba(255,255,255,0.04);
-      --radius:14px; --gap:18px; --container:1100px; --maxwidth:1200px;
-      --glass-2: rgba(255,255,255,0.02);
+      --bg:#fbfcfe; --panel:#ffffff; --muted:#6b7280; --accent:#0f766e; --glass: rgba(15,118,110,0.06);
+      --radius:14px; --glass-2: rgba(15,118,110,0.04);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color-scheme: light;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background:linear-gradient(180deg,var(--bg),#071023); color:#e6eef8; -webkit-font-smoothing:antialiased; padding:36px 20px;
-      display:flex; align-items:flex-start; justify-content:center;
-    }
-    .site{width:100%;max-width:var(--container)}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 6px 20px rgba(12,20,35,0.6)}
-    .brand h1{margin:0;font-size:20px;letter-spacing:0.2px}
-    nav{display:flex;gap:14px;align-items:center}
-    nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px}
-    nav a.cta{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#ffffff);color:#0f172a}
+    a{color:var(--accent);text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1100px;margin:24px auto;padding:24px}
+    header{display:flex;flex-direction:column;align-items:stretch;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;align-self:flex-start}
+    .logo{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#ecfeff, #bbf7d0);box-shadow:0 6px 18px rgba(15,118,110,0.08)}
+    .logo svg{width:36px;height:36px}
+    h1{font-size:20px;margin:0}
+    .subtle{color:var(--muted);font-size:13px}
 
-    .hero{
-      display:grid;grid-template-columns:1fr 420px;gap:28px;margin-bottom:26px;align-items:center
-    }
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:26px; border-radius:var(--radius); box-shadow: 0 8px 30px rgba(3,6,12,0.6);
-      border:1px solid rgba(255,255,255,0.03);
-    }
-    .hero-main h2{margin:0 0 8px 0;font-size:28px}
-    .hero-main p{color:var(--muted);margin:0 0 18px}
-    .kpis{display:flex;gap:12px}
-    .kpi{background:var(--glass);padding:12px;border-radius:12px;min-width:100px;text-align:center}
-    .kpi h3{margin:0;font-size:18px}
-    .kpi p{margin:4px 0 0;color:var(--muted);font-size:13px}
+    /* --------- Loader ---------- */
+    #loader{position:fixed;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,#ffffff, #f8fafc);z-index:9999}
+    .breath{width:120px;height:120px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg, #d1fae5, #ecfeff);box-shadow:0 12px 40px rgba(15,118,110,0.08);animation:breath 2.6s infinite}
+    @keyframes breath{0%{transform:scale(0.96);filter:brightness(1)}50%{transform:scale(1.06);filter:brightness(1.02)}100%{transform:scale(0.96)}}
+    .breath svg{width:60px;height:60px}
 
-    .hero-side{display:flex;flex-direction:column;gap:12px}
-    .cta-btn{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));text-decoration:none;color:white;font-weight:600}
-    .link-ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:var(--muted);text-decoration:none;display:inline-block;text-align:center}
+    /* --------- Hero ---------- */
+    .hero{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;margin-top:18px}
+    .card{background:var(--panel);padding:22px;border-radius:var(--radius);box-shadow:0 8px 30px rgba(2,6,23,0.06)}
+    .lead{font-size:22px;margin:0 0 8px}
+    .kicker{font-weight:600;color:var(--accent);font-size:13px}
+    .cta-row{display:flex;gap:12px;margin-top:16px}
+    .btn{padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:white}
+    .btn-ghost{background:transparent;border:1px solid var(--glass);color:var(--accent)}
 
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap);margin-top:18px}
+    /* --------- Layout Sections ---------- */
+    main{display:grid;grid-template-columns:1fr 320px;gap:24px;margin-top:22px}
+    .sidebar{position:sticky;top:24px;height:max-content}
+    section h2{margin-top:8px;margin-bottom:10px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-    section{margin-bottom:22px}
-    .section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-    .section-head h3{margin:0}
-    .program{display:flex;gap:12px;align-items:flex-start}
-    .prog-icon{width:56px;height:56px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center;font-weight:700}
+    /* timeline */
+    .timeline{display:flex;flex-direction:column;gap:12px}
+    .timeline .item{display:flex;gap:12px}
+    .dot{width:12px;height:12px;border-radius:50%;background:var(--accent);margin-top:6px}
 
-    .events{display:flex;flex-direction:column;gap:10px}
-    .event{padding:12px;border-radius:10px;background:var(--glass-2);display:flex;justify-content:space-between;align-items:center}
+    /* tables and lists */
+    table{width:100%;border-collapse:collapse}
+    td,th{padding:8px;border-bottom:1px solid #f1f5f9;text-align:left}
 
-    form input, form textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    form label{display:block;margin:8px 0 4px;color:var(--muted);font-size:13px}
-    .row{display:flex;gap:12px}
-    .row .col{flex:1}
-
-    footer{display:flex;justify-content:space-between;align-items:center;padding-top:12px;color:var(--muted);font-size:13px}
+    /* footer */
+    footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px;padding:28px 0}
 
     /* responsive */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr;}
-      .grid-3{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:640px){
-      body{padding:18px}
-      .grid-3{grid-template-columns:1fr}
-      nav{display:none}
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      main{grid-template-columns:1fr}
+      .logo{width:48px;height:48px}
     }
 
-    /* subtle animations */
-    .fade-up{transform:translateY(6px);opacity:0;transition:all .45s cubic-bezier(.2,.9,.2,1)}
-    .inview{transform:none;opacity:1}
+    .card:hover{transform:translateY(-4px);transition:transform .18s}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);font-weight:600;color:var(--accent);font-size:12px}
 
-    /* code block style for content editing */
-    .note{font-family:monospace;background:rgba(0,0,0,0.12);padding:10px;border-radius:8px;color:var(--muted);font-size:13px}
 
-    /* download toast */
-    .toast{position:fixed;right:18px;bottom:18px;background:#031021;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 10px 30px rgba(2,4,10,0.6);display:none}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+
+    /* Update the nav-logos styles */
+    .nav-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Changed from space-between to center */
+      padding: 1px 25px;
+      background: transparent; /* Changed from white to transparent */
+      border-radius: var(--radius);
+      margin-bottom: 0;
+      width: 100%;
+      gap: 100px; /* Added fixed gap between logos */
+    }
+
+    .nav-logo {
+      height: 150px; /* Set fixed height for all logos */
+      width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      max-width: 200px; /* Prevent logos from getting too wide */
+    }
+
+    /* Update the first-loader styles in the <style> section */
+.first-loader {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #0f0f0f;
+  z-index: 10000;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.second-loader {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  background: white;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Add loading bar styles */
+.loading-bar {
+  width: 200px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-top: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: #ffffff;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loading {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(400%); }
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+/* Add to your existing styles */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add this to your styles section */
+.welcome-btn {
+  background: #1a237e !important;
+  color: white !important;
+  border: none !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  transition: background 0.3s ease !important;
+}
+
+.welcome-btn:hover {
+  background: #151d69 !important;
+}
   </style>
 </head>
 <body>
-  <div class="site">
+
+ 
+  <!-- Loader sections -->
+  <div id="firstLoader" class="first-loader">
+  <div style="text-align: center;">
+    <img src="CET LOGO.png" alt="CET Logo" style="width: 220px; height: auto;"/>
+    <div class="loading-bar"></div>
+  </div>
+</div>
+
+<div id="secondLoader" class="second-loader">
+  <div style="text-align: center; font-family: 'Inter', sans-serif;">
+    <h1 style="font-size:48px; font-weight:700; color:black; margin-bottom:16px; opacity:0; transform: translateY(20px); animation: slideUp 0.5s forwards 0.3s;">
+      EmpowerED
+    </h1>
+    <p style="font-size:20px; color:black; margin-bottom:32px; opacity:0; transform: translateY(20px); animation: slideUp 0.5s forwards 0.6s;">
+      Inspiring Tomorrow's Innovators through Experience
+    </p>
+    <button onclick="startMainPage()" class="welcome-btn" 
+      style="opacity:0; transform: translateY(20px); animation: slideUp 0.5s forwards 0.9s;">
+      View Advocacy
+    </button>
+  </div>
+</div>
+
+  <div class="container" id="site" style="display:none">
     <header>
-      <div class="brand">
-        <div class="logo">A</div>
-        <div>
-          <h1>AdvocateNow</h1>
-          <div style="font-size:12px;color:var(--muted)">Community-led. Data-driven. People-first.</div>
+
+      <div class="nav-logos">
+        <div class="nav-logo">
+          <img src="HCDc logo.png" alt="HCDC Logo" />
+        </div>
+        <div class="nav-logo">
+          <img src="BLAZE ON LOGO.png" alt="BLAZE ON Logo" />
+        </div>
+        <div class="nav-logo">
+          <img src="CET LOGOTYPE.png" alt="CET Logotype" />
         </div>
       </div>
-      <nav>
-        <a href="#mission">Mission</a>
-        <a href="#programs">Programs</a>
-        <a href="#events">Events</a>
-        <a href="#get-involved" class="cta">Get Involved</a>
-      </nav>
+
+      <!-- Header content: Brand info and Download Advocacy button -->
+      <div class="header-content" style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="18" height="18" rx="4" fill="#10b981"/>
+              <path d="M7 13l3 3 7-8" stroke="#052e2a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <h1>EmpowerED</h1>
+            <div class="subtle">Inspiring Tomorrow's Innovators through Experience — CETSO &amp; partners</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost" id="downloadBtn" onclick="downloadAdvocacy()">Download Advocacy</button>
+      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="card hero-main fade-up inview">
-          <h2>Stand with us to protect community rights & build resilient futures.</h2>
-          <p>AdvocateNow is a volunteer-driven organization focused on education, policy change, and grassroots support. Use this template to launch your advocacy campaign quickly — edit text, colors, and images.</p>
+    <div class="hero">
+      <div class="card">
+        <div class="kicker">Campaign • CETSO (GEES • ACES • LISCO • ITS)</div>
+        <h2 class="lead">EmpowerED: Inspiring Tomorrow’s Innovators through Experience</h2>
+        <p class="subtle">Bridging curiosity and technological literacy through hands-on activities, mini challenges, and collaboration. Light-mode, accessible, and events-first UX.</p>
 
-          <div class="kpis" aria-hidden>
-            <div class="kpi"><h3>12k+</h3><p>People Reached</p></div>
-            <div class="kpi"><h3>85</h3><p>Volunteers</p></div>
-            <div class="kpi"><h3>24</h3><p>Programs Run</p></div>
+        <div class="cta-row">
+          <button class="btn btn-primary" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})">Sign up for challenges</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('activities').scrollIntoView({behavior:'smooth'})">See activities</button>
+        </div>
+
+        <hr style="margin:18px 0;border:none;border-top:1px solid var(--glass-2)" />
+
+        <div class="grid-2">
+          <div>
+            <strong>When</strong>
+            <div class="subtle">Event Day (See timeline for schedule)</div>
           </div>
-
-          <div style="margin-top:18px;display:flex;gap:12px">
-            <a class="cta-btn" href="#get-involved">Volunteer</a>
-            <a class="link-ghost" id="downloadTemplate">Download Template</a>
-          </div>
-
-          <div style="margin-top:18px" class="note">
-            Tip: Replace placeholder copy with your advocacy's mission, impact numbers, and real events. This single file contains everything — styles and scripts.
+          <div>
+            <strong>Budget</strong>
+            <div class="subtle">Estimated ₱9,500 — within ₱10,000 cap</div>
           </div>
         </div>
 
-        <aside class="hero-side">
-          <div class="card">
-            <h4 style="margin:0 0 8px 0">Quick Facts</h4>
-            <p class="muted" style="color:var(--muted);margin:0 0 12px">Location: Metro / Nationwide • Founded: 2019 • Contact: hello@advocatenow.org</p>
+      </div>
+
+      <aside class="card" style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font-weight:700">Quick Facts</div>
+          <div class="pill">#EmpowerED2025</div>
+        </div>
+        <div style="font-size:13px;color:var(--muted)">Target: Students curious about tech • Beneficiaries: CETSO & child orgs • SDGs: 4, 8, 17</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn btn-ghost" onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">Timeline</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('budget').scrollIntoView({behavior:'smooth'})">Budget</button>
+        </div>
+      </aside>
+    </div>
+
+    <main>
+      <div>
+        <!-- Overview -->
+        <section class="card" id="overview">
+          <h2>Overview</h2>
+          <p>EmpowerED is a campaign focused on bridging the gap between curiosity and technological literacy. Through interactive booths, hands-on challenges, and collaborative spaces, we guide students from curiosity to practical skills that enable innovation and teamwork.</p>
+
+          <div style="margin-top:14px">
+            <h3 style="margin:0 0 6px">Objectives</h3>
+            <ol>
+          <li>Introduce students to CETSO and its child organizations, showcasing their academic programs and opportunities.</li>
+          <li>Build technology literacy through guided, hands-on activities that establish a strong foundation in tech concepts.</li>
+          <li>Engage students in mini challenges and collaborative tasks that strengthen teamwork, creativity, and problem-solving skills.</li>
+          <li>Encourage active participation and promote membership in CETSO organizations to support personal and academic growth.</li>
+          <li>Highlight how inter-organization collaboration drives personal, academic, and professional development.</li>
+          </ol>
+
+          </div>
+        </section>
+
+        <!-- Activities -->
+        <section class="card" id="activities" style="margin-top:18px">
+          <h2>Planned Activities</h2>
+          <div class="grid-2">
+            <div>
+              <h4>Interactive Booth</h4>
+              <p class="subtle">A collaborative space showcasing each child organization, with demos and quick sign-ups.</p>
+
+              <h4 style="margin-top:12px">Mini Challenges & Quick Quests</h4>
+              <ul>
+                <li><strong>Code Sprint</strong> — beginner-friendly coding challenge (5–15 min)</li>
+                <li><strong>Circuit Sprint</strong> — assemble a basic circuit using provided kits</li>
+                <li><strong>Data Hunt</strong> — a rapid research task using library tools</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Innovation Wall</h4>
+              <p class="subtle">A space for students to pin ideas, form teams, and get mentorship.</p>
+
+              <h4 style="margin-top:12px">Membership Sign-Up Hub</h4>
+              <p class="subtle">Quick registration via QR code stations on-site. Follow-up emails for interested students.</p>
+            </div>
+          </div>
+
+          <hr style="margin:14px 0;border:none;border-top:1px solid var(--glass-2)" />
+
+          <h4>Information Video</h4>
+          <div style="background:var(--glass);padding:12px;border-radius:10px;">(Placeholder) A short engaging video presenting CETSO and child organizations — replace with uploaded MP4.</div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="card" id="timeline" style="margin-top:18px">
+          <h2>Timeline</h2>
+          <div class="timeline">
+            <div class="item"><div class="dot" aria-hidden="true"></div><div><strong>1 week before</strong><div class="subtle">Prepare booth, coordinate with child orgs, promote</div></div></div>
+            <div class="item"><div class="dot" aria-hidden="true"></div><div><strong>Event Day</strong><div class="subtle">Launch booth, run mini challenges, document and share</div></div></div>
+            <div class="item"><div class="dot" aria-hidden="true"></div><div><strong>1–2 days after</strong><div class="subtle">Share recap, gather feedback, follow up with sign-ups</div></div></div>
+          </div>
+        </section>
+
+        <!-- Budget -->
+        <section class="card" id="budget" style="margin-top:18px">
+          <h2>Budget Proposal (up to ₱10,000)</h2>
+          <table>
+            <thead><tr><th>Item</th><th>Estimated Cost (₱)</th></tr></thead>
+            <tbody>
+              <tr><td>Booth Setup &amp; Decorations</td><td>4,500</td></tr>
+              <tr><td>Mini Challenge Materials</td><td>2,000</td></tr>
+              <tr><td>Prizes</td><td>1,500</td></tr>
+              <tr><td>Additional Tech Supplies</td><td>1,500</td></tr>
+              <tr><th>TOTAL</th><th>9,500</th></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- Outcomes -->
+        <section class="card" style="margin-top:18px">
+          <h2>Expected Outcomes &amp; Success Indicators</h2>
+          <ul>
+            <li>Increase in inquiries and sign-ups for CETSO and child organizations.</li>
+            <li>High participation in mini-challenges and hands-on tasks.</li>
+            <li>Positive feedback from students, faculty, and staff on relevance and creativity.</li>
+            <li>Stronger collaboration across GEES, ACES, LISCO, and ITS.</li>
+          </ul>
+        </section>
+
+        <!-- CTAs -->
+        <section class="card" id="signup" style="margin-top:18px">
+          <h2>Sign up / Express interest</h2>
+          <p class="subtle">Quick sign-up for mini challenges, mailing list, or membership follow-up.</p>
+          <form id="interestForm" onsubmit="event.preventDefault();handleForm();">
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <div class="link-ghost" style="min-width:150px">Donate</div>
-              <div class="link-ghost" style="min-width:150px">Our Reports</div>
+              <input required placeholder="Full name" id="name" style="flex:1;padding:10px;border-radius:10px;border:1px solid #eef2f7" />
+              <input required placeholder="Email" id="email" style="flex:1;padding:10px;border-radius:10px;border:1px solid #eef2f7" />
             </div>
-          </div>
-
-          <div class="card">
-            <h4 style="margin:0 0 6px 0">Upcoming Event</h4>
-            <div class="events">
-              <div class="event"><div>Community Forum — Sep 25, 2025</div><div class="muted" style="color:var(--muted)">Register</div></div>
-              <div class="event"><div>Volunteer Training — Oct 12, 2025</div><div style="color:var(--accent2);font-weight:600">Sign up</div></div>
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <select id="org" style="padding:10px;border-radius:10px;border:1px solid #eef2f7">
+                <option value="">Interested in...</option>
+                <option value="CETSO">CETSO</option>
+                <option value="GEES">GEES</option>
+                <option value="ACES">ACES</option>
+                <option value="LISCO">LISCO</option>
+                <option value="ITS">ITS</option>
+              </select>
+              <button class="btn btn-primary" type="submit">Join</button>
             </div>
-          </div>
-        </aside>
-      </section>
+            <div id="formMsg" style="margin-top:8px;color:var(--accent);font-weight:600;display:none">Thanks — we'll follow up by email.</div>
+          </form>
+        </section>
 
-      <section id="mission" class="card fade-up inview">
-        <div class="section-head"><h3>Our Mission</h3><div style="color:var(--muted)">People-powered change</div></div>
-        <p style="color:var(--muted)">We work to empower marginalized communities with resources, legal support, and education. Our approach combines data research, community organizing, and direct assistance. Below are the sections you should customize for your advocacy campaign.</p>
+      </div>
 
-        <div style="margin-top:12px">
-          <ul style="color:var(--muted);line-height:1.6">
-            <li><strong>Vision:</strong> A society where everyone has access to basic rights and opportunities.</li>
-            <li><strong>Core Values:</strong> Transparency, Inclusion, Evidence-based action, Empathy.</li>
-            <li><strong>Target Audience:</strong> Local communities, policymakers, donors, volunteers.</li>
-            <li><strong>Key Messages:</strong> Clear, concise, and repeatable — headlines for social sharing and press outreach.</li>
+      <aside class="sidebar">
+        <div class="card">
+          <h3 style="margin:0">Campaign Slogan</h3>
+          <div style="margin-top:6px;font-weight:700">EmpowerED Together: Learn, Create, Innovate</div>
+          <div style="margin-top:8px;color:var(--muted)">#EmpowerED2025</div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h4 style="margin:0">Target Beneficiaries</h4>
+          <ul style="margin-top:8px;color:var(--muted);font-size:14px">
+            <li>Students curious about technology</li>
+            <li>Beginners seeking starting points</li>
+            <li>Students interested in innovation &amp; collaboration</li>
           </ul>
         </div>
-      </section>
 
-      <section id="programs">
-        <div class="section-head"><h3>Programs</h3><div style="color:var(--muted)">What we do</div></div>
-        <div class="grid-3">
-          <div class="card">
-            <div class="program"><div class="prog-icon">ED</div><div>
-              <h4 style="margin:0">Education Clinics</h4>
-              <p style="color:var(--muted);margin:6px 0 0">Workshops, materials, and school partnerships to raise awareness.</p>
-            </div></div>
-          </div>
-
-          <div class="card">
-            <div class="program"><div class="prog-icon">AD</div><div>
-              <h4 style="margin:0">Advocacy & Policy</h4>
-              <p style="color:var(--muted);margin:6px 0 0">Research briefs, policy recommendations, and stakeholder engagement.</p>
-            </div></div>
-          </div>
-
-          <div class="card">
-            <div class="program"><div class="prog-icon">SR</div><div>
-              <h4 style="margin:0">Support & Relief</h4>
-              <p style="color:var(--muted);margin:6px 0 0">Direct assistance to families and communities in crisis.</p>
-            </div></div>
-          </div>
+        <div class="card" style="margin-top:12px;display:grid;place-items:center;gap:8px">
+          <div style="font-weight:700">Membership Sign-Up</div>
+          <canvas id="qr" width="140" height="140" aria-hidden="true"></canvas>
+          <div style="font-size:12px;color:var(--muted)">Scan to sign up on event day</div>
         </div>
-      </section>
-
-      <section id="events" class="card fade-up inview">
-        <div class="section-head"><h3>Events & Calendar</h3><div style="color:var(--muted)">Planning at a glance</div></div>
-        <p style="color:var(--muted)">Edit these sample events to match real dates. Consider embedding Google Calendar or exporting ICS in production.</p>
-        <div style="margin-top:12px" class="events">
-          <div class="event"><div><strong>Community Forum</strong><div style="color:var(--muted);font-size:13px">Sep 25, 2025 — 2:00PM</div></div><div><button class="link-ghost" onclick="rsvp('Community Forum')">RSVP</button></div></div>
-          <div class="event"><div><strong>Volunteer Training</strong><div style="color:var(--muted);font-size:13px">Oct 12, 2025 — 9:00AM</div></div><div><button class="link-ghost" onclick="rsvp('Volunteer Training')">RSVP</button></div></div>
-        </div>
-      </section>
-
-      <section id="get-involved" class="card fade-up inview">
-        <div class="section-head"><h3>Get Involved</h3><div style="color:var(--muted)">Join the movement</div></div>
-        <form id="joinForm" onsubmit="return handleSubmit(event)">
-          <div class="row"><div class="col"><label for="name">Full name</label><input id="name" required></div><div class="col"><label for="email">Email</label><input id="email" type="email" required></div></div>
-          <label for="interest">I'm interested in</label>
-          <select id="interest" style="padding:12px;border-radius:10px;background:transparent;color:inherit;border:1px solid rgba(255,255,255,0.04)">
-            <option>Volunteer</option>
-            <option>Donate</option>
-            <option>Policy & Research</option>
-            <option>Community Outreach</option>
-          </select>
-          <label for="message">Message (optional)</label>
-          <textarea id="message" rows="4"></textarea>
-          <div style="margin-top:12px;display:flex;gap:10px"><button class="cta-btn" type="submit">Send</button><button type="button" class="link-ghost" onclick="clearForm()">Clear</button></div>
-        </form>
-      </section>
-
-      <section class="card fade-up inview">
-        <div class="section-head"><h3>Resources & Reports</h3><div style="color:var(--muted)">Downloadables</div></div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <div class="note">Annual Report — <a href="#" style="color:var(--accent2)">Download</a></div>
-          <div class="note">Policy Brief — <a href="#" style="color:var(--accent2)">Download</a></div>
-        </div>
-      </section>
-
-      <footer>
-        <div>© <span id="year">2025</span> AdvocateNow — Built with ❤️ for communities</div>
-        <div style="display:flex;gap:10px"><a href="#" class="link-ghost">Privacy</a><a href="#" class="link-ghost">Contact</a></div>
-      </footer>
+      </aside>
     </main>
+
+    <footer>
+      <div>Created for CETSO — College of Engineering and Technology Students Organization</div>
+      <div style="margin-top:6px">Made with ♥ for learners • Light mode • Accessible layout</div>
+    </footer>
   </div>
 
-  <div class="toast" id="toast">Template downloaded!</div>
-
   <script>
-    // small JS for interactivity
-    document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener('DOMContentLoaded', () => {
+  const firstLoader = document.getElementById('firstLoader');
+  const secondLoader = document.getElementById('secondLoader');
+  const mainSite = document.getElementById('site');
 
-    // RSVP placeholder
-    function rsvp(ev){ alert('Thanks! We received your RSVP for: ' + ev); }
+  // Show first loader for 2 seconds
+  setTimeout(() => {
+    // Fade out first loader
+    firstLoader.style.opacity = '0';
+    
+    setTimeout(() => {
+      firstLoader.style.display = 'none';
+      // Show second loader
+      secondLoader.style.display = 'grid';
+      setTimeout(() => {
+        secondLoader.style.opacity = '1';
+      }, 50);
+    }, 500);
+  }, 2000);
+});
 
-    function handleSubmit(e){
-      e.preventDefault();
-      const name=document.getElementById('name').value.trim();
-      const email=document.getElementById('email').value.trim();
-      if(!name||!email){ alert('Please provide name and email.'); return false; }
-      alert('Thanks for joining, ' + name + '! We\'ll reach out to ' + email + '.');
-      clearForm();
-      return false;
-    }
-    function clearForm(){ document.getElementById('joinForm').reset(); }
+// Function to start main page
+function startMainPage() {
+  const secondLoader = document.getElementById('secondLoader');
+  const mainSite = document.getElementById('site');
+  
+  if (secondLoader && mainSite) {
+    secondLoader.classList.add('fade-out');
+    setTimeout(() => {
+      secondLoader.style.display = 'none';
+      mainSite.style.display = 'block';
+      mainSite.style.opacity = '0';
+      setTimeout(() => {
+        mainSite.style.opacity = '1';
+        mainSite.style.transition = 'opacity 0.5s ease-in-out';
+      }, 100);
+    }, 500);
+  }
+}
 
-    // simple in-view animation
-    const faders=document.querySelectorAll('.fade-up');
-    const io=new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('inview') });
-    },{threshold:0.12});
-    faders.forEach(f=>io.observe(f));
+// Form handling function
+function handleForm() {
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const formMsg = document.getElementById('formMsg');
+  
+  if (!nameInput || !emailInput) return;
+  
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  
+  if (!name || !email) return;
+  
+  if (formMsg) {
+    formMsg.style.display = 'block';
+    setTimeout(() => {
+      formMsg.style.display = 'none';
+      document.getElementById('interestForm')?.reset();
+    }, 1800);
+  }
 
-    // Download the current template as an HTML file
-    document.getElementById('downloadTemplate').addEventListener('click', ()=>{
-      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
-      const blob = new Blob([html], {type: 'text/html'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'advocacy-template.html'; document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-      showToast('Template downloaded — check your downloads folder.');
-    });
+  console.log('Sign-up submitted', {
+    name,
+    email,
+    org: document.getElementById('org')?.value
+  });
+}
 
-    function showToast(msg){ const t=document.getElementById('toast'); t.textContent = msg; t.style.display='block'; setTimeout(()=>t.style.display='none',2500); }
+// Download advocacy function
+function downloadAdvocacy() {
+  const link = document.createElement('a');
+  link.href = 'EmpowerED-Advocacy-Campaign.pdf';
+  link.download = 'EmpowerED-Advocacy-Campaign.pdf';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
   </script>
 </body>
 </html>
