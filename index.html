@@ -1,15 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link rel="icon" href="empowered logo.png" type="image/png" />
+</head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EmpowerED — Inspiring Tomorrow's Innovators</title>
   <meta name="description" content="EmpowerED: Inspiring Tomorrow’s Innovators through Experience — an advocacy site by CETSO and its child organizations." />
   <style>
 
-    :root{
-      --bg:#fbfcfe; --panel:#ffffff; --muted:#6b7280; --accent:#0f766e; --glass: rgba(15,118,110,0.06);
-      --radius:14px; --glass-2: rgba(15,118,110,0.04);
+    :root {
+      --bg: #fbfcfe;
+      --panel: #ffffff;
+      --muted: #6b7280;
+      --accent: #1a237e; /* Changed from green (#0f766e) to blue (#1a237e) */
+      --glass: rgba(15,118,110,0.06);
+      --radius: 14px;
+      --glass-2: rgba(15,118,110,0.04);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       color-scheme: light;
     }
@@ -76,14 +83,16 @@
     /* Update the nav-logos styles */
     .nav-logos {
       display: flex;
+      flex-wrap: nowrap;    /* Prevent wrapping */
       align-items: center;
-      justify-content: center; /* Changed from space-between to center */
+      justify-content: center;
       padding: 1px 25px;
       background: transparent; /* Changed from white to transparent */
       border-radius: var(--radius);
       margin-bottom: 0;
       width: 100%;
-      gap: 100px; /* Added fixed gap between logos */
+      gap: 40px;
+      overflow-x: auto;  /* In case the viewport is really small */
     }
 
     .nav-logo {
@@ -107,28 +116,37 @@
   inset: 0;
   display: grid;
   place-items: center;
-  background: #0f0f0f;
+  background: #0b0027;
   z-index: 10000;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
+  overflow: hidden;
 }
 
-.second-loader {
-  position: fixed;
-  inset: 0;
-  display: none;
-  place-items: center;
-  background: white;
-  z-index: 9999;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+.first-loader::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: rotate 40s linear infinite;
+  opacity: 0.1;
 }
 
-/* Add loading bar styles */
+.first-loader img {
+  width: 220px; /* Increased size */
+  height: auto;
+  animation: pulse 2s infinite;
+  position: relative;
+  z-index: 2;
+}
+
+/* Loading bar under the logo */
 .loading-bar {
   width: 200px;
   height: 3px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255,255,255,0.1);
   border-radius: 4px;
   margin-top: 20px;
   overflow: hidden;
@@ -155,12 +173,10 @@
   100% { transform: translateX(400%); }
 }
 
-.fade-out {
-  opacity: 0;
-}
-
-.fade-in {
-  opacity: 1;
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 /* Add to your existing styles */
@@ -190,6 +206,77 @@
 .welcome-btn:hover {
   background: #151d69 !important;
 }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  /* Stack hero columns on smaller screens */
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Adjust main layout columns */
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reduce spacing on smaller devices */
+  .container {
+    margin: 16px auto;
+    padding: 16px;
+  }
+  
+  .nav-logos {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Use fluid container and scaled text for mobile */
+  .container {
+    margin: 8px auto;
+    padding: 12px;
+  }
+  
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .lead {
+    font-size: 1.2rem;
+  }
+
+  /* Make sure buttons fill available width */
+  .btn, .welcome-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* Add safe-area padding to the body */
+body {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Update container for safe-area, if needed */
+.container {
+  padding-left: calc(24px + env(safe-area-inset-left));
+  padding-right: calc(24px + env(safe-area-inset-right));
+}
+
+/* Add/update the CSS for second-loader */
+.second-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
   </style>
 </head>
 <body>
@@ -198,7 +285,7 @@
   <!-- Loader sections -->
   <div id="firstLoader" class="first-loader">
   <div style="text-align: center;">
-    <img src="CET LOGO.png" alt="CET Logo" style="width: 220px; height: auto;"/>
+    <img src="CET LOGO.png" alt="CET Logo" />
     <div class="loading-bar"></div>
   </div>
 </div>
@@ -438,14 +525,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const secondLoader = document.getElementById('secondLoader');
   const mainSite = document.getElementById('site');
 
-  // Show first loader for 2 seconds
+  // Display first loader for 2 seconds
   setTimeout(() => {
-    // Fade out first loader
     firstLoader.style.opacity = '0';
-    
     setTimeout(() => {
       firstLoader.style.display = 'none';
-      // Show second loader
       secondLoader.style.display = 'grid';
       setTimeout(() => {
         secondLoader.style.opacity = '1';
@@ -454,7 +538,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 2000);
 });
 
-// Function to start main page
 function startMainPage() {
   const secondLoader = document.getElementById('secondLoader');
   const mainSite = document.getElementById('site');
